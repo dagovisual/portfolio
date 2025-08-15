@@ -13,8 +13,13 @@
     <form id="project-form" class="space-y-4">
       <input type="text" id="title" placeholder="Judul Proyek" class="w-full p-2 border rounded" required>
       <textarea id="desc" placeholder="Deskripsi Proyek" class="w-full p-2 border rounded" required></textarea>
-      <input type="url" id="img" placeholder="URL Gambar" class="w-full p-2 border rounded" required>
+
+      <label class="block font-semibold">Unggah Gambar atau Masukkan URL</label>
+      <input type="file" id="imgFile" accept="image/*" class="w-full p-2 border rounded">
+      <input type="url" id="imgUrl" placeholder="URL Gambar" class="w-full p-2 border rounded">
+
       <input type="url" id="video" placeholder="URL Video (opsional)" class="w-full p-2 border rounded">
+
       <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">Simpan</button>
     </form>
   </div>
@@ -22,16 +27,32 @@
   <script>
     document.getElementById('project-form').addEventListener('submit', e => {
       e.preventDefault();
-      const projects = JSON.parse(localStorage.getItem('projects')) || [];
-      projects.push({
-        title: document.getElementById('title').value,
-        desc: document.getElementById('desc').value,
-        img: document.getElementById('img').value,
-        video: document.getElementById('video').value
-      });
-      localStorage.setItem('projects', JSON.stringify(projects));
-      alert('Proyek berhasil disimpan!');
-      window.location.href = 'index.html';
+
+      let imgSrc = document.getElementById('imgUrl').value;
+      const imgFile = document.getElementById('imgFile').files[0];
+
+      if (imgFile) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          saveProject(event.target.result);
+        }
+        reader.readAsDataURL(imgFile);
+      } else {
+        saveProject(imgSrc);
+      }
+
+      function saveProject(image) {
+        const projects = JSON.parse(localStorage.getItem('projects')) || [];
+        projects.push({
+          title: document.getElementById('title').value,
+          desc: document.getElementById('desc').value,
+          img: image,
+          video: document.getElementById('video').value
+        });
+        localStorage.setItem('projects', JSON.stringify(projects));
+        alert('Proyek berhasil disimpan!');
+        window.location.href = 'index.html';
+      }
     });
   </script>
 </body>
