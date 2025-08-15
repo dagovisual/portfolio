@@ -1,0 +1,74 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Saya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+  <!-- NAVBAR -->
+  <nav class="fixed w-full bg-white shadow z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
+      <a href="#home" class="flex items-center space-x-3">
+        <img src="https://via.placeholder.com/40x40" alt="Logo" class="w-10 h-10 object-contain" id="site-logo">
+        <span class="text-lg font-bold">Nama Anda</span>
+      </a>
+      <div class="space-x-6">
+        <a href="#home" class="text-gray-600 hover:text-black">Home</a>
+        <a href="#portfolio" class="text-gray-600 hover:text-black">Project</a>
+        <a href="form.html" class="text-gray-600 hover:text-black">Tambah Proyek</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
+    <h1 class="text-5xl font-bold mb-4">Nama Anda</h1>
+    <p class="text-lg text-gray-500">Designer & Artist</p>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="max-w-3xl mx-auto py-20 px-4">
+    <h2 class="text-3xl font-bold mb-6">Tentang Saya</h2>
+    <p class="text-gray-600 leading-relaxed">Saya adalah seorang desainer dan seniman yang berfokus pada pembuatan karya visual minimalis dan elegan.</p>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="bg-gray-50 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center">Portofolio</h2>
+      <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="max-w-3xl mx-auto py-20 px-4 text-center">
+    <h2 class="text-3xl font-bold mb-6">Kontak</h2>
+    <div class="flex justify-center gap-6">
+      <a href="https://instagram.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-8 h-8"></a>
+      <a href="https://wa.me/628123456789" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-8 h-8"></a>
+    </div>
+  </section>
+
+  <footer class="text-center py-6 text-gray-400 text-sm">© 2025 Nama Anda. All rights reserved.</footer>
+
+  <script>
+    const projects = JSON.parse(localStorage.getItem('projects')) || [];
+    const grid = document.getElementById('portfolio-grid');
+    projects.forEach(p => {
+      const card = document.createElement('div');
+      card.className = "bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition";
+      let html = `<img src="${p.img}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2">${p.title}</h3><p class="text-gray-600 text-sm mb-4">${p.desc}</p>`;
+      if (p.video) html += `<video controls class="w-full rounded"><source src="${p.video}" type="video/mp4"></video>`;
+      html += `</div>`;
+      card.innerHTML = html;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
