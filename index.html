@@ -1,0 +1,73 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Minimalis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-between px-6 py-4">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Logo" class="w-8 h-8" id="site-logo">
+      <span class="font-bold text-lg">Nama Anda</span>
+    </div>
+    <div class="space-x-6">
+      <a href="#home" class="hover:underline">Home</a>
+      <a href="#portfolio" class="hover:underline">Proyek</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section id="home" class="h-screen flex flex-col justify-center items-center">
+    <h1 class="text-4xl font-bold mb-4">Nama Anda</h1>
+    <p class="text-lg text-gray-600">Designer & Artist</p>
+  </section>
+
+  <!-- Tentang Saya -->
+  <section class="max-w-3xl mx-auto px-4 py-16">
+    <h2 class="text-2xl font-bold mb-4">Tentang Saya</h2>
+    <p>Saya adalah seorang desainer dan seniman yang berfokus pada pembuatan karya visual profesional berupa gambar dan video.</p>
+  </section>
+
+  <!-- Portofolio -->
+  <section id="portfolio" class="max-w-6xl mx-auto px-4 py-16">
+    <h2 class="text-2xl font-bold mb-8">Portofolio</h2>
+    <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- Kontak -->
+  <section class="bg-gray-100 py-12">
+    <div class="flex justify-center space-x-6">
+      <a href="https://instagram.com/hay.dago" target="_blank"><img src="instagram-icon.png" class="w-6 h-6" alt="Instagram"></a>
+      <a href="https://wa.me/6285609992955" target="_blank"><img src="whatsapp-icon.png" class="w-6 h-6" alt="WhatsApp"></a>
+    </div>
+  </section>
+
+  <script>
+    const portfolioGrid = document.getElementById('portfolio-grid');
+    const projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+    projects.forEach(proj => {
+      const card = document.createElement('div');
+      card.className = 'bg-white shadow rounded overflow-hidden';
+      let media = '';
+      if (proj.video) {
+        media = `<video controls class="w-full"><source src="${proj.video}" type="video/mp4"></video>`;
+      } else if (proj.img) {
+        media = `<img src="${proj.img}" alt="${proj.title}" class="w-full">`;
+      }
+      card.innerHTML = `
+        ${media}
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-2">${proj.title}</h3>
+          <p class="text-gray-600">${proj.desc}</p>
+        </div>
+      `;
+      portfolioGrid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
